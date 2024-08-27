@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+
+  
+  
+  
+  
+  
+<!-- Landing Page -->
+<div id="landing-page" class="container">
+    <!-- Info Button -->
+    <button id="info-button" onclick="navigateTo('instructions')" style="position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; font-size: 20px; padding: 0; border: none; border-radius: 50%; text-align: center; line-height: 30px;">
+        ⓘ
+    </button>
+  
+      
+      <!-- Background Audio -->
+<!-- Discrete Music Controls -->
+<div style="position: fixed; top: 5px; right: 10px; z-index: 1000; opacity: 0.75; display: flex; align-items: center;">
+    <!-- Start Button -->
+  <button style="background: none; border: none; font-size: 16px; cursor: pointer; margin-right: 5px;" onclick="document.getElementById('background-audio').play()" title="Play Music">
+        &#9654; <!-- Play Icon -->
+    </button>
+    <!-- Stop Button -->
+  <button style="background: none; border: none; font-size: 18px; cursor: pointer; margin-right: 5px;" onclick="document.getElementById('background-audio').currentTime = 0; document.getElementById('background-audio').pause()" title="Stop Music">
+        &#9632; <!-- Stop Icon -->
+    </button>
+    <!-- Volume Slider -->
+    <label for="volume-control" style="font-size: 16px; margin-right: 5px; vertical-align: middle;">🔊</label>
+    <input type="range" id="volume-control" min="0" max="1" step="0.01" value="1" 
+        onchange="document.getElementById('background-audio').volume = this.value" 
+        style="width: 50px; height: 10px; cursor: pointer;">
+</div>
+
+<audio id="background-audio" src="https://raw.githubusercontent.com/DavidAnand02/V14_System/371679d8a3d997a41b8a5ae19947ce90beb56d72/%5BNo%20Copyright%5D%20Fuzzeke%20-%20Are%20You%20With%20Us_%20%5BGaming%20Menu%20Music%5D.mp3" loop></audio>
+
+  
+    <h1>Welcome Player</h1>
+    <p>You now have the qualifications to begin.</p>
+    
+    <div class="button-group">
+        <button onclick="navigateTo('player-status')">Status</button>
+        <button onclick="navigateTo('job')">Job</button>
+        <button onclick="navigateTo('skills')">Skills</button>
+        <button onclick="navigateTo('quests')">Quests</button>
+    </div>
+</div>
+
+<!-- Instructions Page -->
+<div id="instructions-page" class="container" style="display:none;">
+    <h1>Instructions</h1>
+
+    <p>1. <strong>Status Page:</strong> Track the rewards you set and earn from quests here. These include:</p>
+    <ul>
+        <p><strong>Stat Points:</strong> These contribute to your overall player level.</p>
+        <p><strong>Player Effects:</strong> These provide boosts and special protections, either passive or active. Effects can be innate, granted by equipping a class/job or title. Titles are also achieved through quests.</p>
+    </ul>
+
+    <p>2. <strong>Job Page:</strong> List the jobs you're interested in acquiring and leveling up. Acquiring a job means you can have job-specific skills and quests.</p>
+
+    <p>3. <strong>Skills Page:</strong> Track the level and progress of all your attained skills. You can toggle between mental and physical skills and track progress by hours or repetitions. To reach the max level of 100, you must input 10,000 hours or repetitions.</p>
+
+    <p>4. <strong>Quests Page:</strong> Add and manage your quests here. You can set a recurrence interval for quests, measured in seconds. When a quest's recurrence interval is completed, it will return to the active list. If you fail a quest, you will need to manually move it back to the active list when ready to try again. Rewards, such as Titles or Stat Points, will be reflected in the Status Page.</p>
+
+    <button onclick="goBack()">Back</button>
+</div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+ <!-- Player Status Page (Hidden by default) -->
+<div id="player-status-page" class="container">
+    <h1>Player Status</h1>
+    <div id="status-scroll-container" class="scrollable-list">
+        <section class="player-info">
+            <h2>Player Info</h2>
+            <p><strong>Player Level:</strong> <span id="player-level">1</span></p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="player-level-progress-bar"></div>
+            </div>
+            <p><strong>Job:</strong> <span id="job-class" contenteditable="true">Warrior</span></p>
+
+            <p><strong>Title:</strong> <span id="titles" contenteditable="true">Novice</span></p>
+        </section>
+<section class="player-stats">
+    <h2>Player Stats</h2>
+    <ul id="stat-list">
+        <li>
+            <strong>Strength:</strong>
+            <span id="strength">10</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="strength" data-change="1">+</button>
+                <button class="stat-button" data-stat="strength" data-change="-1">-</button>
+            </div>
+        </li>
+        <li>
+            <strong>Agility:</strong>
+            <span id="agility">8</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="agility" data-change="1">+</button>
+                <button class="stat-button" data-stat="agility" data-change="-1">-</button>
+            </div>
+        </li>
+        <li>
+            <strong>Intelligence:</strong>
+            <span id="intelligence">9</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="intelligence" data-change="1">+</button>
+                <button class="stat-button" data-stat="intelligence" data-change="-1">-</button>
+            </div>
+        </li>
+        <li>
+            <strong>Sense:</strong>
+            <span id="sense">6</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="sense" data-change="1">+</button>
+                <button class="stat-button" data-stat="sense" data-change="-1">-</button>
+            </div>
+        </li>
+              <li>
+            <strong>Endurance:</strong>
+            <span id="endurance">6</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="endurance" data-change="1">+</button>
+                <button class="stat-button" data-stat="endurance" data-change="-1">-</button>
+            </div>
+        </li>
+        <li>
+            <strong>Dexterity:</strong>
+            <span id="dexterity">9</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="dexterity" data-change="1">+</button>
+                <button class="stat-button" data-stat="dexterity" data-change="-1">-</button>
+            </div>
+        </li>
+        <li>
+            <strong>Charisma:</strong>
+            <span id="charisma">5</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="charisma" data-change="1">+</button>
+                <button class="stat-button" data-stat="charisma" data-change="-1">-</button>
+            </div>
+        </li>
+        <li>
+            <strong>Willpower:</strong>
+            <span id="willpower">7</span>
+            <div class="stat-buttons">
+                <button class="stat-button" data-stat="willpower" data-change="1">+</button>
+                <button class="stat-button" data-stat="willpower" data-change="-1">-</button>
+            </div>
+        </li>
+
+    </ul>
+</section>
+
+        <section class="effects-section">
+            <h2>Active and Passive Effects</h2>
+            <ul id="effects-list" contenteditable="true">
+                <li>Job Effects: </li>
+                <li>Title Effects: </li>
+            </ul>
+        </section>
+    </div>
+    <button onclick="goBack()" class="back-button">Back</button>
+</div>
+
+<script>
+    // Save content to localStorage
+    function saveEffects() {
+        const effectsList = document.getElementById('effects-list');
+        localStorage.setItem('effectsListContent', effectsList.innerHTML);
+    }
+
+    function saveJobClass() {
+        const jobClass = document.getElementById('job-class');
+        localStorage.setItem('jobClassContent', jobClass.innerHTML);
+    }
+
+    function saveTitle() {
+        const title = document.getElementById('titles');
+        localStorage.setItem('titleContent', title.innerHTML);
+    }
+
+    // Load content from localStorage
+    function loadEffects() {
+        const savedContent = localStorage.getItem('effectsListContent');
+        if (savedContent) {
+            const effectsList = document.getElementById('effects-list');
+            effectsList.innerHTML = savedContent;
+        }
+    }
+
+    function loadJobClass() {
+        const savedContent = localStorage.getItem('jobClassContent');
+        if (savedContent) {
+            const jobClass = document.getElementById('job-class');
+            jobClass.innerHTML = savedContent;
+        }
+    }
+
+    function loadTitle() {
+        const savedContent = localStorage.getItem('titleContent');
+        if (savedContent) {
+            const title = document.getElementById('titles');
+            title.innerHTML = savedContent;
+        }
+    }
+
+    // Event listener to save content when changed
+    document.getElementById('effects-list').addEventListener('input', saveEffects);
+    document.getElementById('job-class').addEventListener('input', saveJobClass);
+    document.getElementById('titles').addEventListener('input', saveTitle);
+
+    // Load the content when the page loads
+    window.addEventListener('load', function() {
+        loadEffects();
+        loadJobClass();
+        loadTitle();
+    });
+</script>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+<!-- Skills Dashboard Page (Hidden by default) -->
+<div id="skills-dashboard" class="container" style="display: none;">
+    <h1>Skills</h1>
+  
+    <button onclick="showSkillList('mental')">Mental Skills</button>
+    <button onclick="showSkillList('physical')">Physical Skills</button>
+
+    <div id="mental-skills" class="hidden">
+        <h2>Mental Skills</h2>
+        <!-- Search Bar for Mental Skills -->
+        <input type="text" id="mental-skill-search" placeholder="Search Mental Skills" oninput="filterSkills('mental')">
+        <div class="scrollable-list">
+            <ul id="mental-skill-list"></ul>
+        </div>
+        <button onclick="showSkillManagement('mental')">Add Mental Skills</button>
+        <button onclick="goBack()">Back</button>
+    </div>
+
+    <div id="physical-skills" class="hidden">
+        <h2>Physical Skills</h2>
+        <!-- Search Bar for Physical Skills -->
+        <input type="text" id="physical-skill-search" placeholder="Search Physical Skills" oninput="filterSkills('physical')">
+        <div class="scrollable-list">
+            <ul id="physical-skill-list"></ul>
+        </div>
+        <button onclick="showSkillManagement('physical')">Add Physical Skills</button>
+        <button onclick="goBack()">Back</button>
+    </div>
+
+    <div id="skill-details" class="hidden">
+        <h2 id="skill-name"></h2>
+        <p>Experience: <span id="experience">0</span> points</p>
+        <p>Level: <span id="level">1</span></p>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="experience-bar"></div>
+        </div>
+        <button id="hour-button" onmousedown="startAddingPoints(1)" onmouseup="stopAddingPoints()" onmouseleave="stopAddingPoints()">+ 1 Hr/Rep</button>
+        <button id="minute-button" onmousedown="startAddingPoints(0.5)" onmouseup="stopAddingPoints()" onmouseleave="stopAddingPoints()">+ 1/2 Hr/Rep</button>
+        <button id="remove-hour-button" onmousedown="startRemovingPoints(1)" onmouseup="stopRemovingPoints()" onmouseleave="stopRemovingPoints()">- 1 Hr/Rep</button>
+        <button id="remove-minute-button" onmousedown="startRemovingPoints(0.5)" onmouseup="stopRemovingPoints()" onmouseleave="stopRemovingPoints()">- 1/2 Hr/Rep</button>
+        
+        <!-- Editable Skill Description Section -->
+        <div id="skill-description-container">
+            <h3>Description</h3>
+            <div id="skill-description" contenteditable="true" placeholder="Enter a description..."></div>
+        </div>
+        
+       
+    </div>
+
+    <div id="skill-management" class="hidden">
+        <h2 id="management-title"></h2>
+        <div class="scrollable-container">
+            <ul id="skill-list"></ul>
+        </div>
+        <input type="text" id="new-skill-name" placeholder="New Skill Name">
+        <button onclick="addSkill()">Add Skill</button>
+        <button onclick="goBack()">Back</button>
+    </div>
+</div>
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+<!-- Quests Page -->
+<div id="quests-page" class="container" style="display: none;">
+    <h1>Quests</h1>
+  
+    <button onclick="showQuestPage('make-quest')">Make Quest</button>
+    <button onclick="goBackToMenu()">Back</button>
+  
+    <!-- Active Quests Section -->
+    <h2>Active Quests</h2>
+    <input type="text" id="search-active" placeholder="Search Active Quests">
+    <div id="quest-list" class="scrollable-list"></div>
+
+    <!-- Completed Quests Section -->
+    <h2>Completed Quests</h2>
+    <input type="text" id="search-completed" placeholder="Search Completed Quests">
+    <div id="completed-quest-list" class="scrollable-list"></div>
+
+    <!-- Failed Quests Section -->
+    <h2>Failed Quests</h2>
+    <input type="text" id="search-failed" placeholder="Search Failed Quests">
+    <div id="failed-quest-list" class="scrollable-list"></div>
+</div>
+
+  
+  
+  
+<!-- Quest Info Page (Hidden by default) -->
+<div id="quest-info-page" class="container" style="display: none;">
+    <div id="quest-info">
+        <h2 id="quest-title" onclick="makeEditable(this)"></h2>
+        <p id="quest-details" onclick="makeEditable(this)"></p>
+        <p id="quest-reward" onclick="makeEditable(this)"></p>
+        <p id="quest-class-tag" onclick="makeEditable(this)"></p>
+        <p id="quest-punishment" onclick="makeEditable(this)"></p>
+        
+        <!-- Flexbox container for buttons -->
+        <div class="button-container">
+            <button onclick="markQuestAsCompleted()">Complete Quest</button>
+            <button onclick="markQuestAsFailed()">Fail Quest</button>
+            <button onclick="moveQuestToActive()">Move to Active</button>
+            <button onclick="deleteQuest()" style="background-color: red; color: white;">Delete Quest</button>
+            <button onclick="closeQuestInfo()">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Function to make a text element editable
+function makeEditable(element) {
+    if (element.contentEditable === "true") return;
+
+    element.contentEditable = "true";
+    element.focus();
+
+    // Save changes when the user clicks outside or presses Enter
+    element.addEventListener("blur", saveChanges);
+    element.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            element.blur();
+        }
+    });
+}
+
+// Function to save changes made to the text
+function saveChanges(event) {
+    const element = event.target;
+    const questIndex = element.dataset.questIndex;  // Get the quest index
+    const quest = quests[questIndex];  // Retrieve the specific quest
+
+    element.contentEditable = "false";
+
+    // Update the correct quest property based on the element id
+    if (element.id === 'quest-title') {
+        quest.title = element.innerText;
+    } else if (element.id === 'quest-details') {
+        quest.description = element.innerText;
+    } else if (element.id === 'quest-reward') {
+        quest.reward = element.innerText.replace('Reward: ', '');
+    } else if (element.id === 'quest-class-tag') {
+        quest.classTag = element.innerText.replace('Class Tag: ', '');
+    } else if (element.id === 'quest-punishment') {
+        quest.punishment = element.innerText.replace('Punishment: ', '');
+    }
+
+    saveQuestsToLocalStorage();
+    console.log("Updated quest:", quest);
+}
+
+</script>
+
+
+
+<!-- Make Quest Page -->
+<div id="make-quest-page" class="container" style="display: none;">
+    <h1>Make a Quest</h1>
+    <form id="quest-form">
+        <label for="quest-title-input">Quest Title:</label>
+        <input type="text" id="quest-title-input" required>
+        
+        <label for="quest-description-input">Quest Description:</label>
+        <textarea id="quest-description-input" required></textarea>
+        
+        <label for="quest-reward-input">Reward:</label>
+        <input type="text" id="quest-reward-input" placeholder="e.g., Stat Points or Title">
+        
+        <label for="quest-class-tag">Class Tag:</label>
+        <input type="text" id="quest-class-tag">
+        
+        <label for="quest-punishment-input">Punishment (optional):</label>
+        <input type="text" id="quest-punishment-input">
+        
+        <label for="quest-activation-time">Daily Reactivation Time:</label>
+        <input type="time" id="quest-activation-time" required>
+      
+      <label for="quest-oneoff-duration">One-Off Duration (hours):</label>
+<input type="number" id="quest-oneoff-duration" min="0" step="1" />
+
+        
+        <button type="button" onclick="cancelQuest()">Cancel</button>
+        <button type="button" onclick="submitQuest()">Submit</button>
+    </form>
+</div>
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+<!-- Job Page -->
+<div id="job-page" class="container" style="display: none;">
+    <h1>Jobs</h1>
+    <button onclick="goBackToMenu()">Back</button>
+    <button onclick="showJobPage('create-job')">Create Job</button>
+    
+    <!-- Search Bar -->
+    <input type="text" id="job-search" placeholder="Search jobs...">
+
+    <!-- Job List Section -->
+    <div id="job-list-container" class="scrollable-list">
+        <!-- Job list items will be inserted here dynamically -->
+    </div>
+</div>
+
+<!-- Job Info Page (Hidden by default) -->
+<div id="job-info-page" class="container" style="display: none;">
+    <div id="job-info">
+        <h2 id="job-title"></h2>
+        
+        <!-- Editable Job Description -->
+        <p id="job-description" contenteditable="true" onblur="saveJobDescription()"></p>
+        
+        <div id="job-experience-info">
+            <p id="job-experience">Experience: 0</p>
+            <p id="job-level">Level: 1</p>
+            <div id="job-experience-bar" class="progress-bar"></div>
+        </div>
+      
+        <button onclick="addJobExperience(100)">+ 1 Hr/Rep</button>
+        <button onclick="subtractJobExperience(100)">- 1 Hr/Rep</button>
+      <button onclick="goBacktoJobPage()">Back</button>
+        <button id="delete-job-button" onclick="deleteJob()" style="background-color: red; color: white;">Delete</button>
+ <!-- Delete Job Button -->
+    </div>
+</div>
+
+<!-- Create Job Page -->
+<div id="create-job-page" class="container" style="display: none;">
+    <h1>Create a Job</h1>
+    <form id="job-form">
+        <label for="job-title-input">Job Title:</label>
+        <input type="text" id="job-title-input" required>
+        
+        <label for="job-description-input">Job Description:</label>
+        <textarea id="job-description-input" required></textarea>
+        
+        <button type="button" onclick="cancelJobCreation()">Cancel</button>
+        <button type="button" onclick="submitJob()">Submit</button>
+        
+    </form>
+</div>
+
+<script>
+    let currentJob = {};
+
+
+function saveJobDescription() {
+    if (currentJobIndex !== null) {
+        const updatedDescription = document.getElementById('job-description').innerText;
+        jobs[currentJobIndex].description = updatedDescription;
+        saveJobs(); // Save the updated jobs array to localStorage
+        console.log("Updated Description: ", updatedDescription);
+    }
+}
+
+
+    // Other existing functions like addJobExperience, subtractJobExperience, etc.
+
+</script>
+
+  
+  
+    <script src="main.js"></script>
+  
+  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('architect01', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support Me',
+    'floating-chat.donateButton.background-color': '#00b9fe',
+    'floating-chat.donateButton.text-color': '#fff'
+  });
+</script>
+  
+</body>
+</html>
