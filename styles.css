@@ -1,0 +1,573 @@
+/* CSS Variables */
+:root {
+    --primary-color: #00bfff;
+    --secondary-color: #1e90ff;
+    --background-color: #1a1a2e;
+    --text-color: #ffffff;
+    --dark-background: #333;
+    --hover-shadow: rgba(0, 204, 255, 0.6);
+    --card-background: #2a2a3e;
+    --font-size-small: 14px;
+    --font-size-medium: 16px;
+    --border-radius: 5px;
+    --shadow-size: 10px;
+}
+
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0f0f1f;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+
+
+/* Container */
+.container {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--hover-shadow);
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh; /* Set a maximum height */
+    overflow-y: auto; /* Make the container scrollable */
+    margin: 20px auto; /* Center the container with some top/bottom margin */
+    scrollbar-width: thin; /* Firefox scrollbar width */
+    scrollbar-color: var(--primary-color) var(--background-color); /* Firefox scrollbar colors */
+}
+
+/* Custom Scrollbar Styles for Webkit (Chrome, Safari) within Containers */
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color); /* Neon blue color for scrollbar thumb */
+    border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+/* Headings */
+h1, h2 {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    margin: 20px 0;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-medium);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+
+
+/* Remove bullet points from skill lists */
+ul#mental-skill-list,
+ul#physical-skill-list,
+ul#skill-list {
+    list-style-type: none; /* Remove bullet points */
+    padding-left: 0;       /* Optional: remove left padding */
+    margin-left: 0;        /* Optional: remove left margin */
+}
+
+
+
+
+/* Forms */
+form {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+}
+
+form label {
+    color: var(--primary-color);
+    font-weight: bold;
+    text-align: right;
+    padding-right: 10px;
+    align-self: center;
+}
+
+form input[type="text"],
+form textarea {
+    background-color: var(--dark-background);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    font-size: var(--font-size-small);
+    width: 100%;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+form input[type="text"]:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+/* Scrollable Containers */
+.scrollable-container,
+.scrollable-list {
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* Scrollbar styles for scrollable-list */
+.scrollable-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color); /* Neon blue color for scrollbar thumb */
+    border-radius: 10px;
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    margin: 10px 0;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: var(--primary-color);
+    width: 0;
+    border-radius: var(--border-radius);
+    transition: width 0.3s;
+}
+
+/* Hidden Elements */
+.hidden {
+    display: none;
+}
+
+/* Page Specific */
+#make-quest-page,
+#status-scroll-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  
+}
+
+#quests-page,
+#quest-log-page,
+#quest-info-page,
+#classes-page,
+#job-page,
+#job-info-page {
+    display: none;
+}
+
+/* Job Page Styles */
+#job-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    box-shadow: 0 0 10px var(--primary-color);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.job-item,
+.quest-item {
+    background-color: var(--card-background);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px var(--hover-shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    text-align: left;
+    max-width: 100%;
+}
+
+.job-item:hover,
+.quest-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px var(--hover-shadow);
+}
+
+.job-item h3,
+.quest-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.job-item p,
+.quest-item p {
+    color: var(--text-color);
+    margin-bottom: 5px;
+    font-size: var(--font-size-small);
+}
+
+
+
+
+
+
+
+
+/* Player Status Page Styles */
+#player-status-page {
+    display: none; /* Hidden by default */
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #1a1a2e; /* Consistent with other pages */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 204, 255, 0.6);
+}
+
+#player-status-page h1 {
+    color: #00bfff; /* Primary color */
+    text-shadow: 0 0 10px #00bfff;
+    margin-bottom: 20px;
+}
+
+.player-info, .player-stats, .effects-section {
+    margin-bottom: 20px;
+}
+
+.player-info p, .player-stats li {
+    margin: 10px 0;
+    font-size: 16px; /* Adjusted for readability */
+    color: #ffffff;
+}
+
+.player-info span, .player-stats span {
+    font-weight: bold;
+}
+
+.player-stats {
+    margin-top: 20px;
+}
+
+#stat-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px; /* Space between stats items */
+    padding: 0; /* Remove default padding */
+    list-style: none; /* Remove bullet points */
+}
+
+#stat-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items */
+    text-align: center; /* Center align text */
+}
+
+#stat-list li strong {
+    margin-bottom: 5px; /* Space between stat name and buttons */
+}
+
+.stat-buttons {
+    display: flex;
+    gap: 5px; /* Tiny bit of space between buttons */
+}
+
+.stat-button {
+    background-color: #00bfff; /* Primary color */
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px; /* Padding for better click area */
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 5px #00bfff;
+}
+
+.stat-button:hover {
+    background-color: #1e90ff; /* Slightly different hover color */
+    box-shadow: 0 0 10px #1e90ff;
+}
+
+.effects-section ul {
+    padding: 0; /* Remove default padding */
+    list-style: none; /* Remove bullet points */
+}
+
+.effects-section li {
+    font-size: 16px; /* Adjusted for readability */
+    color: #ffffff;
+}
+
+.back-button {
+    background-color: #00bfff; /* Primary color */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 0 5px #00bfff;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.back-button:hover {
+    background-color: #1e90ff; /* Slightly different hover color */
+    box-shadow: 0 0 10px #1e90ff;
+}
+
+
+
+
+
+
+
+
+
+/* Progress Bar */
+.progress-lvl-bar-container {
+    width: 100%;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    margin: 10px 0;
+}
+
+.progress-lvl-bar {
+    height: 20px;
+    background-color: var(--primary-color);
+    width: 0;
+    border-radius: var(--border-radius);
+    transition: width 0.3s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Skill List Items */
+ul#mental-skill-list li,
+ul#physical-skill-list li,
+ul#skill-list li {
+    background-color: var(--card-background);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+ul#mental-skill-list li:hover,
+ul#physical-skill-list li:hover,
+ul#skill-list li:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--hover-shadow);
+}
+
+/* Remove button styling */
+.remove-skill-button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-small);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.remove-skill-button:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 5px var(--hover-shadow);
+}
+
+
+
+
+
+
+/* Flex container for buttons */
+#quest-info-page .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center the buttons horizontally */
+    margin-top: 20px; /* Space above the buttons */
+}
+
+/* Style for all buttons */
+#quest-info-page button {
+    padding: 10px 20px; /* Padding inside buttons */
+    font-size: 16px; /* Button text size */
+    border: none; /* Remove default borders */
+    border-radius: 5px; /* Rounded corners */
+
+    color: white; /* Button text color */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for buttons */
+#quest-info-page button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Make buttons the same width */
+#quest-info-page button {
+    flex: 1 1 150px; /* Each button takes up equal space, min width 150px */
+}
+
+/* Optional: If you want buttons in two rows */
+#quest-info-page .button-container {
+    max-width: 500px; /* Set a maximum width for the container */
+    margin: 0 auto; /* Center the container */
+    justify-content: space-between; /* Space out the buttons evenly */
+}
+
+
+
+
+
+
+/* Search bar styles */
+input[type="text"] {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #007bff; /* Neon blue border */
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #fff; /* Background color */
+    color: #333; /* Text color */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Ensure the scrollable container works well on mobile */
+#status-scroll-container {
+    max-height: 80vh; /* Ensures it doesn't take up full screen height */
+    overflow-y: auto; /* Allow vertical scrolling */
+}
+
+/* Mobile Responsive Styling */
+@media (max-width: 500px) {
+    /* Adjust player stats layout for smaller screens */
+    #stat-list {
+        display: flex;
+        flex-direction: column; /* Stack stats vertically */
+        gap: 20px; /* Space between stats */
+    }
+
+    #stat-list li {
+        display: flex;
+        flex-direction: column; /* Stack name, points, and buttons vertically */
+        align-items: center;
+        text-align: center;
+    }
+
+    .stat-buttons {
+        display: flex;
+        justify-content: center; /* Center the buttons */
+        gap: 10px; /* Space between the buttons */
+    }
+
+    /* Adjust button size for mobile */
+    .stat-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    /* Effects section styling */
+    .effects-section ul {
+        text-align: left;
+        padding-left: 15px; /* Indent the list slightly */
+    }
+
+    /* Ensure the container doesn't overflow the mobile screen */
+    .container {
+        width: 95%;
+        max-height: 90vh; /* Set max height to avoid overflow */
+        overflow-y: auto; /* Enable scrolling */
+    }
+
+    /* Make back button more accessible */
+    .back-button {
+        padding: 10px 20px;
+        font-size: 14px;
+        width: 100%; /* Full-width button for mobile */
+    }
+}
+
+
+
