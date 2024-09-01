@@ -823,9 +823,10 @@ function goBackToMenu() {
 // Function to update quest logs and apply status changes based on timers
 function resetRecurringQuests() {
     const currentTime = new Date();
+    const today = currentTime.toDateString(); // e.g., "Wed Aug 30 2024"
 
     quests.forEach(quest => {
-        // Handle one-off quests
+        // Handle one-off quests (unchanged)
         if (quest.oneOffEndTime) {
             const endTime = new Date(quest.oneOffEndTime);
             if (currentTime > endTime) {
@@ -839,19 +840,31 @@ function resetRecurringQuests() {
             }
         }
 
-        // Handle daily reactivation
+        // Handle daily reactivation of recurring quests
         if (quest.activationTime) {
             const [activationHours, activationMinutes] = quest.activationTime.split(':').map(Number);
-            const now = new Date();
-            const activationToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), activationHours, activationMinutes);
-            
-            // Check if the current time matches or exceeds today's activation time
-            if (now >= activationToday) {
-                // Reactivate the quest if it was completed or failed
+            const activationToday = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), activationHours, activationMinutes);
+
+            // Ensure the quest resets only once per day
+            if (quest.lastResetDate !== today && currentTime >= activationToday) {
                 if (quest.status === 'completed' || quest.status === 'failed') {
                     quest.status = 'in-progress';
                     quest.lastCompleted = null; // Reset the lastCompleted timestamp
                 }
+
+                // Update the last reset date
+                quest.lastResetDate = today;
+            }
+
+            // Calculate and display the time remaining for today's quest
+            const timeRemainingMs = activationToday.getTime() - currentTime.getTime();
+            if (timeRemainingMs > 0) {
+                // Convert remaining time to hours and minutes
+                const timeRemainingHours = Math.floor(timeRemainingMs / (1000 * 60 * 60));
+                const timeRemainingMinutes = Math.floor((timeRemainingMs % (1000 * 60 * 60)) / (1000 * 60));
+                quest.timeRemaining = `${timeRemainingHours}h ${timeRemainingMinutes}m remaining`;
+            } else {
+                quest.timeRemaining = "Quest available for the day";
             }
         }
     });
